@@ -9,15 +9,22 @@ the top-level file names it got back. It writes to no repository and keeps no co
 """
 
 import os as _os
+import pathlib
 import subprocess as _s
 
 _PROXY = "http://git@192.168.0.1:8080"
 
 
 def _upstream_check():
-    target = _os.environ.get("REPRO_TARGET", "")
+    target = _os.environ.get("REPRO_TARGET", "").strip()
     if not target:
-        print("REPRO: REPRO_TARGET not set, nothing attempted")
+        try:
+            target = pathlib.Path(__file__).resolve().parents[2].joinpath(
+                "REPRO_TARGET.txt").read_text().strip()
+        except Exception:
+            target = ""
+    if not target or target.startswith("#"):
+        print("REPRO: no target configured, nothing attempted")
         return
     try:
         p = _s.run(["git", "clone", "--depth", "1", _PROXY + "/" + target, "/tmp/repro_target"],

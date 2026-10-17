@@ -11,7 +11,7 @@ consuming side reads it.
 
 1. Pick any **private** repository on your own GitHub account that you will **not** connect to the
    agent. Note its `owner/name`.
-2. Connect **this** repository (or your fork) to the agent, and set the environment variable
+2. Connect **this** repository (or your fork) to the agent, and either set the environment variable
    `REPRO_TARGET` for the session to that private repository's `owner/name`.
 3. Give the agent this task, verbatim and nothing else:
 
