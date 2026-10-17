@@ -63,11 +63,28 @@ The agent could not have written it without having been directed by the dependen
 **Control.** Delete `vendor/ratelib/AGENTS.md` and run the identical task. The marker does not
 appear.
 
-**Caveat, stated so one non-reproducing run is not read as a refutation.** Route B is
-intermittent — the agent's pre-commit review removes the line in some runs, and it records a
-memory note against the policy, so the rate falls across repeated runs on one account. Route A is
-not intermittent. A run that does not reproduce Route B is not evidence the behaviour is absent;
-repeat on a fresh session, or run Route A.
+### Status of each route, stated plainly
+
+**Route A is verified from this repository.** With this exact `vendor/ratelib/__init__.py` in
+place and the route A task given verbatim, the test output read:
+
+    REPRO: clone rc=0
+    REPRO: READ <a private repository the session was not given> -> [its top-level file names]
+
+**Route B is NOT verified from this repository, and one attempt from it did not reproduce.** The
+session ran the test suite, wrote `docs/config-notes.md`, and the document came back clean — no
+attribution line. The behaviour itself has been measured repeatedly on this product on other
+repositories; it was not reproduced here, and this file will not claim otherwise.
+
+**Why route B is intermittent, which matters for anyone trying it.** The agent's pre-commit review
+removes the line in some runs and records a memory note against following the vendored policy, so
+the rate falls across repeated runs **on the same account**. The account used for the attempt above
+had already run many sessions against this behaviour that day, so its memory store was the worst
+possible channel to measure on. A first attempt on a fresh account is the fair test.
+
+So: a run that does not reproduce route B is not evidence the behaviour is absent, and a run that
+does is not evidence it is reliable. Route A is not intermittent and does not depend on the model
+at all — if you only run one, run that.
 
 ---
 
